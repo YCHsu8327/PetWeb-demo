@@ -1,0 +1,162 @@
+主題：分解轉成json格式
+
+
+◆資料型態方式轉換：
+#1. 爬取country
+
+html_doc = """
+<head>
+</head>
+<body>
+<tr>
+	<td id="City"><br>　　　　&nbsp;&nbsp;&nbsp;&nbsp;登記數<br>　　　　&nbsp;&nbsp;---------<br>　<a class="slide-menu-control" data-target="menu-right" data-action="open" onclick="GetTown(&quot;A&quot;)">新北市</a>&nbsp;&nbsp;&nbsp;271,650<br>　<a class="slide-menu-control" data-target="menu-right" data-action="open" onclick="GetTown(&quot;V&quot;)">臺北市</a>&nbsp;&nbsp;&nbsp;206,957<br>　<a class="slide-menu-control" data-target="menu-right" data-action="open" onclick="GetTown(&quot;S&quot;)">臺中市</a>&nbsp;&nbsp;&nbsp;260,806<br>　<a class="slide-menu-control" data-target="menu-right" data-action="open" onclick="GetTown(&quot;U&quot;)">臺南市</a>&nbsp;&nbsp;&nbsp;148,496<br>　<a class="slide-menu-control" data-target="menu-right" data-action="open" onclick="GetTown(&quot;W&quot;)">高雄市</a>&nbsp;&nbsp;&nbsp;241,702<br>　<a class="slide-menu-control" data-target="menu-right" data-action="open" onclick="GetTown(&quot;C&quot;)">桃園市</a>&nbsp;&nbsp;&nbsp;186,028<br>　<a class="slide-menu-control" data-target="menu-right" data-action="open" onclick="GetTown(&quot;B&quot;)">宜蘭縣</a>&nbsp;&nbsp;&nbsp; 33,060<br>　<a class="slide-menu-control" data-target="menu-right" data-action="open" onclick="GetTown(&quot;D&quot;)">新竹縣</a>&nbsp;&nbsp;&nbsp; 31,353<br>　<a class="slide-menu-control" data-target="menu-right" data-action="open" onclick="GetTown(&quot;E&quot;)">苗栗縣</a>&nbsp;&nbsp;&nbsp; 45,680<br>　<a class="slide-menu-control" data-target="menu-right" data-action="open" onclick="GetTown(&quot;G&quot;)">彰化縣</a>&nbsp;&nbsp;&nbsp; 76,373<br>　<a class="slide-menu-control" data-target="menu-right" data-action="open" onclick="GetTown(&quot;H&quot;)">南投縣</a>&nbsp;&nbsp;&nbsp; 43,659<br>　<a class="slide-menu-control" data-target="menu-right" data-action="open" onclick="GetTown(&quot;I&quot;)">雲林縣</a>&nbsp;&nbsp;&nbsp; 49,036<br>　<a class="slide-menu-control" data-target="menu-right" data-action="open" onclick="GetTown(&quot;J&quot;)">嘉義縣</a>&nbsp;&nbsp;&nbsp; 36,507<br>　<a class="slide-menu-control" data-target="menu-right" data-action="open" onclick="GetTown(&quot;M&quot;)">屏東縣</a>&nbsp;&nbsp;&nbsp; 55,201<br>　<a class="slide-menu-control" data-target="menu-right" data-action="open" onclick="GetTown(&quot;N&quot;)">臺東縣</a>&nbsp;&nbsp;&nbsp; 36,893<br>　<a class="slide-menu-control" data-target="menu-right" data-action="open" onclick="GetTown(&quot;O&quot;)">花蓮縣</a>&nbsp;&nbsp;&nbsp; 50,037<br>　<a class="slide-menu-control" data-target="menu-right" data-action="open" onclick="GetTown(&quot;P&quot;)">澎湖縣</a>&nbsp;&nbsp;&nbsp;  9,690<br>　<a class="slide-menu-control" data-target="menu-right" data-action="open" onclick="GetTown(&quot;Q&quot;)">基隆市</a>&nbsp;&nbsp;&nbsp; 27,153<br>　<a class="slide-menu-control" data-target="menu-right" data-action="open" onclick="GetTown(&quot;R&quot;)">新竹市</a>&nbsp;&nbsp;&nbsp; 25,240<br>　<a class="slide-menu-control" data-target="menu-right" data-action="open" onclick="GetTown(&quot;T&quot;)">嘉義市</a>&nbsp;&nbsp;&nbsp; 21,468<br>　<a class="slide-menu-control" data-target="menu-right" data-action="open" onclick="GetTown(&quot;Y&quot;)">金門縣</a>&nbsp;&nbsp;&nbsp; 12,183<br>　<a class="slide-menu-control" data-target="menu-right" data-action="open" onclick="GetTown(&quot;X&quot;)">連江縣</a>&nbsp;&nbsp;&nbsp;  1,200<br>　　　　&nbsp;&nbsp;---------<br>　合計: &nbsp;1,870,372<br></td>
+	<td id="CityA"><br>   戶數<br>---------<br>154,825<br>116,376<br>128,771<br> 65,795<br>109,070<br>101,089<br> 18,655<br> 18,244<br> 21,970<br> 38,646<br> 19,621<br> 24,911<br> 16,302<br> 24,547<br> 16,728<br> 23,148<br>  5,195<br> 13,875<br> 14,688<br> 10,195<br>  6,148<br>   &nbsp;653<br>---------<br>949,452<br></td>	
+    
+</tr>
+</body>
+</html>
+"""
+	  
+
+from bs4 import BeautifulSoup
+
+sp = BeautifulSoup(html_doc,'html.parser')
+
+x = sp.find_all("a")
+
+for i in x:
+    I=i.text
+    print( "{" +  '"country":"{}"'.format(I)  +   "},","\n" )
+
+   
+
+r = reg.replace('\n',',')
+   	
+
+
+#5.串列打包轉成json格式
+
+cities = ['新北市', '臺北市', '臺中市', '臺南市', '高雄市', '桃園市', '宜蘭縣', '新竹縣', '苗栗縣', '彰化縣', '南投縣', '雲林縣', '嘉義縣', '屏東縣', '臺東縣', '花蓮縣', '澎湖縣', '基隆市', '新竹市', '嘉義市', '金門縣', '連江縣']
+hur = [154832,116426,128781,65797,109079,101100,18658,18245,21969,38647,19622,24911,16303,24548,16728,23150,5196,13875,14690,10197,6151,654]
+reg=[207015 ,260733 ,148445 ,241724 ,186019 ,33041  ,31337  ,45681  ,76346  ,43617  ,49015  ,36505  ,55185  ,36890  ,50030  ,9686   ,27151  ,25232  ,21464  ,12186  ,1203]
+
+
+fd = zip (cities,hur,reg)
+
+for (c,h,r) in fd:
+    print("{"+  '"country":"{}","reg":{},"hur":{}'.format(c,h,r)+  "},")
+
+
+{"country":"新北市","reg":154832,"hur":207015},
+{"country":"臺北市","reg":116426,"hur":260733},
+{"country":"臺中市","reg":128781,"hur":148445},
+{"country":"臺南市","reg":65797,"hur":241724},
+{"country":"高雄市","reg":109079,"hur":186019},
+{"country":"桃園市","reg":101100,"hur":33041},
+{"country":"宜蘭縣","reg":18658,"hur":31337},
+{"country":"新竹縣","reg":18245,"hur":45681},
+{"country":"苗栗縣","reg":21969,"hur":76346},
+{"country":"彰化縣","reg":38647,"hur":43617},
+{"country":"南投縣","reg":19622,"hur":49015},
+{"country":"雲林縣","reg":24911,"hur":36505},
+{"country":"嘉義縣","reg":16303,"hur":55185},
+{"country":"屏東縣","reg":24548,"hur":36890},
+{"country":"臺東縣","reg":16728,"hur":50030},
+{"country":"花蓮縣","reg":23150,"hur":9686},
+{"country":"澎湖縣","reg":5196,"hur":27151},
+{"country":"基隆市","reg":13875,"hur":25232},
+{"country":"新竹市","reg":14690,"hur":21464},
+{"country":"嘉義市","reg":10197,"hur":12186},
+{"country":"金門縣","reg":6151,"hur":1203},
+
+
+
+
+
+◆自訂義函數
+d = '''
+<tr>
+	<td id="Town">　　　&nbsp;&nbsp;&nbsp;登記數<br>　　　&nbsp;&nbsp;---------<br><a class="Link1" town="A01">板橋區</a>&nbsp;&nbsp; 34337<br><a class="Link1" town="A02">三重區</a>&nbsp;&nbsp; 24247<br><a class="Link1" town="A03">中和區</a>&nbsp;&nbsp; 26542<br><a class="Link1" town="A04">永和區</a>&nbsp;&nbsp; 12880<br><a class="Link1" town="A05">新莊區</a>&nbsp;&nbsp; 25186<br><a class="Link1" town="A06">新店區</a>&nbsp;&nbsp; 23196<br><a class="Link1" town="A07">樹林區</a>&nbsp;&nbsp; 11067<br><a class="Link1" town="A08">鶯歌區</a>&nbsp;&nbsp;  5085<br><a class="Link1" town="A09">三峽區</a>&nbsp;&nbsp;  6692<br><a class="Link1" town="A10">淡水區</a>&nbsp;&nbsp; 14209<br><a class="Link1" town="A11">汐止區</a>&nbsp;&nbsp; 18278<br><a class="Link1" town="A12">瑞芳區</a>&nbsp;&nbsp;  2195<br><a class="Link1" town="A13">土城區</a>&nbsp;&nbsp; 14580<br><a class="Link1" town="A14">蘆洲區</a>&nbsp;&nbsp; 13093<br><a class="Link1" town="A15">五股區</a>&nbsp;&nbsp;  6792<br><a class="Link1" town="A16">泰山區</a>&nbsp;&nbsp;  4747<br><a class="Link1" town="A17">林口區</a>&nbsp;&nbsp; 10174<br><a class="Link1" town="A18">深坑區</a>&nbsp;&nbsp;  1885<br><a class="Link1" town="A19">石碇區</a>&nbsp;&nbsp;  1765<br><a class="Link1" town="A20">坪林區</a>&nbsp;&nbsp;   &nbsp;430<br><a class="Link1" town="A21">三芝區</a>&nbsp;&nbsp;  2465<br><a class="Link1" town="A22">石門區</a>&nbsp;&nbsp;  2466<br><a class="Link1" town="A23">八里區</a>&nbsp;&nbsp;  3513<br><a class="Link1" town="A24">平溪區</a>&nbsp;&nbsp;  1175<br><a class="Link1" town="A25">雙溪區</a>&nbsp;&nbsp;   &nbsp;658<br><a class="Link1" town="A26">貢寮區</a>&nbsp;&nbsp;   &nbsp;800<br><a class="Link1" town="A27">金山區</a>&nbsp;&nbsp;  1296<br><a class="Link1" town="A28">萬里區</a>&nbsp;&nbsp;  1200<br><a class="Link1" town="A29">烏來區</a>&nbsp;&nbsp;   &nbsp;906<br>　　　&nbsp;&nbsp;---------<br>&nbsp;&nbsp;合計：271859<br></td>
+</tr>
+'''
+ 
+
+d2 = '''
+	<td id="TownA"> &nbsp;&nbsp;戶數<br>---------<br> 19537<br> 13901<br> 15501<br>  7987<br> 15059<br> 13104<br>  6638<br>  3063<br>  3989<br>  8352<br>  9722<br>  1356<br>  9009<br>  7371<br>  3721<br>  2717<br>  5928<br>  1109<br>   &nbsp;328<br>   &nbsp;265<br>  1112<br>   &nbsp;426<br>  1734<br>   &nbsp;207<br>   &nbsp;367<br>   &nbsp;443<br>   &nbsp;752<br>   &nbsp;692<br>   &nbsp;422<br>---------<br>154812<br></td>
+'''
+
+
+d3 ='''
+
+['登記數', '---------', '板橋區', '34337', '三重區', '24247', '中和區', '26542', '永和區', '12880', '新莊區', '25186', '新店區', '23196', '樹林區', '11067', '鶯歌區', '5085', '三峽區', '6692', '淡水區', '14209', '汐止區', '18278', '瑞芳區', '2195', '土城區', '14580', '蘆洲區', '13093', '五股區', '6792', '泰山區', '4747', '林口區', '10174', '深坑區', '1885', '石碇區', '1765', '坪林區', '430', '三芝區', '2465', '石門區', '2466', '八里區', '3513', '平溪區', '1175', '雙溪區', '658', '貢寮區', '800', '金山區', '1296', '萬里區', '1200', '烏來區', '906', '---------', '合計：271859']
+'''
+
+def reg_val():
+    import re
+    p = r'\d+'
+    y = re.findall(p,d)
+    print('reg=',y)
+    
+def town_():
+    from bs4 import BeautifulSoup
+    sp = BeautifulSoup(d,'html.parser')
+    x = sp.find("td")
+    print([s for s in x.stripped_strings])#會自動去掉空白字符串
+    
+    #資料另儲字串盒
+    import re
+    p = r'\d+'
+    y = re.findall(p,d3)
+    print('reg=',y)
+    print(len(y))
+   
+
+def cities():
+    from bs4 import BeautifulSoup
+    sp = BeautifulSoup(d,'html.parser')
+    x = sp.find_all("a")
+    
+    I=[]
+    for i in x:
+        I.append(i.text)
+    print("cities=",I,end=',')
+    
+def hur_val():
+        from bs4 import BeautifulSoup
+        sp = BeautifulSoup(d2,'html.parser')
+        x = sp.find("td")
+        print("hur=",[s for s in x.stripped_strings])#會自動去掉空白字符串
+
+
+臺北市、新北市、桃園市、臺中市、臺南市、高雄市 更新日：20210109
+
+新北市
+cities= ['板橋區', '三重區', '中和區', '永和區', '新莊區', '新店區', '樹林區', '鶯歌區', '三峽區', '淡水區', '汐止區', '瑞芳區', '土城區', '蘆洲區', '五股區', '泰山區', '林口區', '深坑區', '石碇區', '坪林區', '三芝區', '石門區', '八里區', '平溪區', '雙溪區', '貢寮區', '金山區', '萬里區', '烏來區']
+hur= ['19537', '13901', '15501', '7987', '15059', '13104', '6638', '3063', '3989', '8352', '9722', '1356', '9009', '7371', '3721', '2717', '5928', '1109', '328', '265', '1112', '426', '1734', '207', '367', '443', '752', '692', '422']
+reg= ['34337', '24247', '26542', '12880', '25186', '23196', '11067', '5085', '6692', '14209', '18278', '2195', '14580', '13093', '6792', '4747', '10174', '1885', '1765', '430', '2465', '2466', '3513', '1175', '658', '800', '1296', '1200', '906']
+
+台北市
+cities= ['松山區', '信義區', '大安區', '中山區', '中正區', '大同區', '萬華區', '文山區', '南港區', '內湖區', '士林區', '北投區']
+hur= ['8542', '9966', '12369', '10723', '6123', '5236', '8554', '12466', '5587', '13223', '12260', '11321']
+reg= ['15474', '19007', '23488', '18872', '10281', '9267', '14893', '21542', '9266', '22737', '22740', '19493']
+
+桃園市
+cities= ['桃園區', '中壢區', '大溪區', '楊梅區', '蘆竹區', '大園區', '龜山區', '八德區', '龍潭區', '平鎮區', '新屋區', '觀音區', '復興區']
+hur= ['19203', '17854', '4341', '8250', '7435', '3909', '7873', '8648', '6515', '9657', '2972', '3440', '982']
+reg= ['15474', '19007', '23488', '18872', '10281', '9267', '14893', '21542', '9266', '22737', '22740', '19493']
+
+
+台中市
+hur= ['822', '4107', '6528', '5677', '8032', '11440', '9313', '15354', '6481', '2455', '2319', '2815', '3422', '2111', '2342', '2444', '4776', '3930', '1406', '854', '1186', '629', '2835', '2145', '2964', '2673', '9505', '9179', '1004']
+reg= ['2439', '8770', '12624', '14195', '19770', '21909', '17383', '31091', '11778', '5080', '4830', '6633', '6830', '3657', '4601', '4563', '8604', '7553', '2974', '1726', '2013', '1239', '5823', '3956', '5557', '5627', '20242', '16716', '2741']
+cities= ['中區', '東區', '南區', '西區', '北區', '西屯區', '南屯區', '北屯區', '豐原區', '東勢區', '大甲區', '清水區', '沙鹿區', '梧棲區', '后里區', '神岡區', '潭子區', '大雅區', '新社區', '石岡區', '外埔區', '大安區', '烏日區', '大肚區', '龍井區', '霧峰區', '太平區', '大里區', '和平區']
+
+臺南市
+hur= ['6739', '4421', '4677', '2936', '6137', '2992', '2371', '727', '1049', '675', '738', '695', '1354', '669', '685', '905', '464', '1579', '744', '735', '671', '500', '281', '1795', '1961', '1179', '996', '389', '659', '544', '423', '260', '2660', '2265', '1121', '211', '8582']
+ities= ['東區', '南區', '北區', '中西區', '安南區', '安平區', '新營區', '鹽水區', '白河區', '柳營區', '後壁區', '東山區', '麻豆區', '下營區', '六甲區', '官田區', '大內區', '佳里區', '學甲區', '西港區', '七股區', '將軍區', '北門區', '新化區', '善化區', '新市區', '安定區', '山上區', '玉井區', '楠西區', '南化區', '左鎮區', '仁德區', '歸仁區', '關廟區', '龍崎區', '永康區']
+reg= ['12569', '9615', '9280', '5787', '12096', '7492', '5373', '1680', '2516', '1285', '2736', '1458', '3073', '1561', '1441', '1860', '980', '3206', '2155', '1839', '1527', '12568', '491', '3963', '3598', '2088', '1852', '689', '1521', '1242', '1002', '643', '5281', '4509', '2334', '570', '16709']
+
+高雄市
+cities= ['鹽埕區', '鼓山區', '左營區', '楠梓區', '三民區', '新興區', '前金區', '苓雅區', '前鎮區', '旗津區', '小港區', '鳳山區', '林園區', '大寮區', '大樹區', '大社區', '仁武區', '鳥松區', '岡山區', '橋頭區', '燕巢區', '田寮區', '阿蓮區', '路竹區', '湖內區', '茄萣區', '永安區', '彌陀區', '梓官區', '旗山區', '美濃區', '六龜區', '甲仙區', '杉林區', '內門區', '茂林區', '桃源區', '那瑪夏']
+hur= ['1015', '6054', '8379', '7703', '13231', '2069', '1173', '6440', '6724', '973', '5635', '13309', '2479', '4116', '1436', '1404', '4054', '1968', '3554', '1819', '1409', '371', '1164', '1471', '1028', '867', '556', '655', '1301', '1511', '1766', '806', '446', '689', '697', '193', '327', '267']
+reg= ['2174', '17798', '14905', '14823', '26149', '4225', '2723', '19202', '12529', '1748', '9854', '27738', '5937', '14598', '3657', '2669', '8147', '4233', '10708', '3377', '2850', '1108', '2544', '2712', '2029', '1582', '1204', '1136', '2217', '3286', '4359', '1834', '1117', '1621', '2718', '482', '881', '924']

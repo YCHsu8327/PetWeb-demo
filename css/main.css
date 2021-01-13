@@ -1,0 +1,53 @@
+* {
+    font-family: "Fjalla One";
+}
+
+svg {
+  height: 90vh;
+}
+
+body {
+  background-color: white;
+}
+
+path {
+  stroke: black;
+  fill: transparent;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  cursor: pointer;
+}
+path:hover {
+  fill: blue;
+  -webkit-transform: translate(-5px, -5px);
+          transform: translate(-5px, -5px);
+}
+
+.title_area {
+  position: absolute;
+  left: 400px;
+  top: 150px;
+  color: black;
+  font-size: 15px;
+}
+
+h1{
+  color: black;
+  padding-left: 10px;
+  font-size: 20px;
+}
+
+.button {
+  ransition-duration: 0.4s;
+}
+
+
+
+
+.forcast h2, .forcast h3, .forcast h4, .forcast h5, .forcast h6 {
+  margin: 0;
+  color:black;
+}
+.forcast h2 {
+  margin-top: 200px;
+}
